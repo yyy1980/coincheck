@@ -42,11 +42,52 @@ class Order(object):
         r = requests.post(url,headers=headers,data=body)
         return json.loads(r.text)
     
+
+###@yyy1980 レバレッジ決済用
+    def create_close(self, id, rate, amount, order_type, pair):
+        ''' create new order function
+        :param rate: float
+        :param amount: float
+        :param order_type: str; set 'buy' or 'sell'
+        :param pair: str; set 'btc_jpy' 
+        '''
+        nonce = nounce()
+        payload = { 'id': id,
+                    'rate': rate,
+                    'amount': amount,
+                    'order_type': order_type,
+                    'pair': pair
+                    }
+        url= 'https://coincheck.com/api/exchange/orders'
+        body = 'position_id={id}&rate={rate}&amount={amount}&order_type={order_type}&pair={pair}'.format(**payload)
+        message = nonce + url + body
+        signature = hmac.new(self.secret_key.encode('utf-8'), message.encode('utf-8'), hashlib.sha256).hexdigest()
+        headers = {
+           'ACCESS-KEY'      : self.access_key,
+           'ACCESS-NONCE'    : nonce,
+           'ACCESS-SIGNATURE': signature
+        }
+        r = requests.post(url,headers=headers,data=body)
+        return json.loads(r.text)
+
     def buy_btc_jpy(self, **kwargs):
         return self.create(order_type='buy', pair='btc_jpy',**kwargs) 
     
     def sell_btc_jpy(self, **kwargs):
         return self.create(order_type='sell', pair='btc_jpy',**kwargs) 
+    
+
+###@yyy1980
+    def leverage_buy_btc_jpy(self, **kwargs):
+        return self.create(order_type='leverage_buy', pair='btc_jpy',**kwargs) 
+    
+###@yyy1980
+    def leverage_sell_btc_jpy(self, **kwargs):
+        return self.create(order_type='leverage_sell', pair='btc_jpy',**kwargs)
+
+###@yyy1980
+    def leverage_close_short_btc_jpy(self, **kwargs):
+        return self.create2(order_type='close_short', pair='btc_jpy',**kwargs)
     
     def list(self):
         ''' list all open orders func
