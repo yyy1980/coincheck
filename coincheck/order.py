@@ -87,7 +87,7 @@ class Order(object):
 
 ###@yyy1980
     def leverage_close_short_btc_jpy(self, **kwargs):
-        return self.create2(order_type='close_short', pair='btc_jpy',**kwargs)
+        return self.create_close(order_type='close_short', pair='btc_jpy',**kwargs)
     
     def list(self):
         ''' list all open orders func
