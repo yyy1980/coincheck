@@ -40,6 +40,18 @@ class Account(object):
         r = requests.get(url,
                          headers = headers)
         return json.loads(r.text)
+
+###@yyy1980
+    def get_leverage_balance(self):
+        ''' confirm leverage_balance
+        '''
+        url = 'https://coincheck.com/api/accounts/leverage_balance'
+        headers = make_header(url,
+                              access_key = self.access_key,
+                              secret_key = self.secret_key)
+        r = requests.get(url,
+                         headers = headers)
+        return json.loads(r.text)
     
 if __name__ == '__main__':
     pass
