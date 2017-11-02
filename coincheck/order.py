@@ -97,6 +97,34 @@ class Order(object):
         r = requests.get(url,headers=headers)
         return json.loads(r.text)
     
+
+###@yyy1980
+    def get_leverage_positions(self):
+        ''' confirm leverage positions
+        '''
+        url= 'https://coincheck.com/api/exchange/leverage/positions'
+        headers = make_header(url,access_key=self.access_key,secret_key=self.secret_key)
+        r = requests.get(url,headers=headers)
+        return json.loads(r.text)
+    
+###@yyy1980
+    def get_leverage_positions_pagination(self,limit,order='desc',starting_after=None,ending_before=None):
+        ''' show payment history pagination
+        :param limit: int
+        :param order: str; set 'desc' or 'asc'
+        :param starting_after: str; id
+        :param ending before: str; id
+        '''
+        query= '?limit={}&order={}'.format(limit,order)
+        if starting_after is not None:
+            query+= '&starting_after={}'.format(starting_after)
+        if ending_before is not None:
+            query+= '&ending_before={}'.format(ending_before)
+        url= 'https://coincheck.com/api/exchange/leverage/positions' + query
+        headers = make_header(url,access_key=self.access_key,secret_key=self.secret_key)
+        r = requests.get(url,headers=headers)
+        return json.loads(r.text)
+
     def cancel(self,order_id):
         ''' cancel the specified order
         :param order_id: order_id to be canceled
@@ -106,6 +134,15 @@ class Order(object):
         r = requests.delete(url,headers=headers)
         return json.loads(r.text)
     
+
+    def history(self):
+        ''' show payment history
+        '''
+        url= 'https://coincheck.com/api/exchange/orders/transactions'
+        headers = make_header(url,access_key=self.access_key,secret_key=self.secret_key)
+        r = requests.get(url,headers=headers)
+return json.loads(r.text)
+
     def history_pagination(self,limit,order='desc',starting_after=None,ending_before=None):
         ''' show payment history pagination
         :param limit: int
