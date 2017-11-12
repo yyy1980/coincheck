@@ -103,20 +103,21 @@ at":"2015-04-06T16:33:12.000Z"},{"id":16141,"amount":"0.4174","rate":30810,"orde
 ### git
 
 ```
-git clone git@github.com:kmn/coincheck.git
+git clone git@github.com:yyy1980/coincheck.git
 ```
 
-### pip 
+### pip
 
 ```
-pip install coincheck
+pip install git+https://github.com/yyy1980/coincheck
 ```
+
 ## Initialization
 
  set your api access-key and secret-key to "coincheck/settings.py"
  to get your api keys , see [API key](https://coincheck.com/api_settings).
 
-## TODO
+## 変更情報
 
-- add test case
-- add offset to market.trade()
+ レバレッジ取引に一部対応
+
