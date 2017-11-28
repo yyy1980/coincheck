@@ -141,7 +141,7 @@ class Order(object):
         url= 'https://coincheck.com/api/exchange/orders/transactions'
         headers = make_header(url,access_key=self.access_key,secret_key=self.secret_key)
         r = requests.get(url,headers=headers)
-return json.loads(r.text)
+        return json.loads(r.text)
 
     def history_pagination(self,limit,order='desc',starting_after=None,ending_before=None):
         ''' show payment history pagination
